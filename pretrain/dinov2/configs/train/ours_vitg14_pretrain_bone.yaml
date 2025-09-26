@@ -1,0 +1,39 @@
+dino:
+  head_n_prototypes: 131072
+  head_bottleneck_dim: 384
+ibot:
+  separate_head: true
+  head_n_prototypes: 131072
+train:
+  batch_size_per_gpu: 48
+  dataset_path: WBCT:root=/path:extra=/path:split=train # Dataset path here
+  centering: sinkhorn_knopp
+  OFFICIAL_EPOCH_LENGTH: 5000
+  saveckp_freq: 5000
+  num_workers: 32
+student:
+  arch: vit_giant2
+  patch_size: 14
+  drop_path_rate: 0.4
+  ffn_layer: swiglufused
+  num_register_tokens: 4
+  block_chunks: 0
+  interpolate_antialias: true
+  interpolate_offset: 0.0
+  pretrained_weights: /path # Path of DINOv2 official pretrain weight
+teacher:
+  momentum_teacher: 0.994
+optim:
+  epochs: 50
+  weight_decay_end: 0.2
+  base_lr: 2e-04
+  warmup_epochs: 1
+  scaling_rule: base
+  layerwise_decay: 1.0
+  freeze_last_layer_epochs: 0
+crops:
+  global_crops_size: 224
+  local_crops_size: 98
+evaluation:
+  eval_period_iterations: 5000
+  

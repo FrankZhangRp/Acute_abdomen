@@ -1,0 +1,43 @@
+data:
+  train_dataset: put your path here
+  val_dataset: put your path here
+  test_dataset: put your path here
+  batch_size: 16
+  num_workers: 2
+  random_z_flip: false
+  random_z_flip_ratio: 0.5
+crops:
+  global_crops_size: 518
+model:
+  n_last_blocks_list: [1, 4]
+  num_classes: 11
+  mean_slice_feature: false
+  mst_type: concate
+  backbone_update: false
+  use_n_blocks: 4
+  use_avgpool: true
+  pretrained_weights: 
+  num_decoder_layers: 3
+  trans_nhead: 16
+  trans_dim_feedforward_ratio: 4
+optim:
+  loss_type: BCE
+  focal_loss_alpha: 0.25
+  focal_loss_gamma: 2.0
+  step_per_epoch: -1
+  learning_rates: [1e-5, 2e-5, 5e-5, 1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2, 0.1]
+  epochs: 30
+  optimizer: sgd
+  sgd_momentum: 0.9
+  lr_scheduler: cosine # step warmup
+  weight_decay: 5e-4
+  lr: 5e-4
+  backbone_lr: 1e-3 # 预训练头的学习率
+  warmup_epochs: 0
+  min_lr: 1.0e-06
+  clip_grad: 3.0
+  patch_embed_lr_mult: 0.2
+  layerwise_decay: 1.0
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+trainer: FinetuneTrans25D_Trainer
