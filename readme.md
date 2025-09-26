@@ -1,6 +1,6 @@
-# A multi‑task deep learning system for diagnosis, risk stratification, and emergency triage of acute abdomen on non‑contrast CT
+# Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage
 
-This is the official repository for the paper “A multi‑task deep learning system for diagnosis, risk stratification, and emergency triage of acute abdomen on non‑contrast CT.”
+This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
 
 The repo contains:
 
