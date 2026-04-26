@@ -1,11 +1,18 @@
 # Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./pretrain/LICENSE)
+[![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-AbdomenNet-yellow)](https://huggingface.co/frankzhang/AbdomenNet)
+[![Weights](https://img.shields.io/badge/Model%20Weights-teacher_checkpoint.pth-orange)](https://huggingface.co/frankzhang/AbdomenNet)
+
 This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
 
 The repo contains:
 
 - Pre-training: DINOv2-based ViT backbone pretraining code in `pretrain/`.
 - Fine-tuning & evaluation: Multi-task classification on non-contrast abdominal CT in `finetune/`, using a 2.5D Transformer decoder to model full volumes and supporting multi-label/multi-task setups.
+- Statistical analysis utilities: bootstrap CIs, paired DeLong, MRMC GLMM, Wilcoxon signed-rank, and Mann-Whitney U scripts in `statistics/`.
 
 ## Repository Structure
 
@@ -63,6 +70,12 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 pip install omegaconf tqdm pillow scikit-learn nibabel numpy torchvision tensorboard
 ```
 
+1) [Optional] Install dependencies for the statistical-analysis scripts
+
+```sh
+pip install pandas scipy statsmodels scikit-learn
+```
+
 1) [Optional] Install DINOv2 pre-training environment
 
 Only required if you plan to run DINOv2 pre-training:
@@ -110,6 +123,9 @@ Notes:
   - A direct `pos_embed` state dict; or
   - A dict with `teacher.backbone.*` keys (automatically mapped to the model backbone).
 - Fine-tuning checkpoints: saved under `--output-dir/checkpoints/epoch_*.pth`. For evaluation, set `model.ckpt_path` to the desired checkpoint.
+- Public release assets are mirrored on Hugging Face: [`frankzhang/AbdomenNet`](https://huggingface.co/frankzhang/AbdomenNet)
+  - `teacher_checkpoint.pth`: backbone-only teacher checkpoint used for the public AbCT pretraining release.
+  - `test_cases/`: preprocessed qualitative test cases used for visualization / reproducibility utilities.
 
 ## Training & Evaluation
 
@@ -205,3 +221,21 @@ The log will print per-task metrics (e.g., AUC, mAP, F1, ACC) and their averages
 ## License
 
 MIT License
+
+## Statistical Analysis
+
+Reusable statistical-analysis utilities that match the paper protocol are provided under `statistics/`.
+
+- `statistics/bootstrap_ci.py`
+  - Bootstrap 95% CIs (default `10,000` iterations) for AUROC, sensitivity, and specificity.
+- `statistics/delong.py`
+  - Paired DeLong test for comparing AUROCs from unaided vs AI-assisted sessions.
+- `statistics/mrmc_glmm.py`
+  - Reader-study generalized linear mixed-effects analysis with reader and case random effects.
+- `statistics/nonparametric_tests.py`
+  - Wilcoxon signed-rank test for paired reading-time comparisons.
+  - Mann-Whitney U test for independent workflow-turnaround cohorts.
+- `statistics/README.md`
+  - Expected CSV schemas and example commands.
+
+The statistical-analysis scripts intentionally do **not** include any experimental results. They provide templates and CLI utilities for reproducing the analysis workflow described in the paper.
