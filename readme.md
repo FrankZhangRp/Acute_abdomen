@@ -37,11 +37,24 @@ conda activate abdomen
 1) Download repo
 
 ```sh
-# Download and unzip from anonymous repository (temporary link before publication)
-wget https://anonymous.4open.science/r/Acute_abdomen/download -O Acute_abdomen.zip
+# Download and unzip from the anonymous review repository
+wget https://anonymous.4open.science/api/repo/Acute_abdomen/zip -O Acute_abdomen.zip
 unzip Acute_abdomen.zip
 cd Acute_abdomen
 ```
+
+Alternative download commands:
+
+```sh
+curl -L https://anonymous.4open.science/api/repo/Acute_abdomen/zip -o Acute_abdomen.zip
+python -m zipfile -e Acute_abdomen.zip .
+cd Acute_abdomen
+```
+
+Anonymous repository links:
+
+- Readme page: `https://anonymous.4open.science/r/Acute_abdomen/readme.md`
+- Direct zip download: `https://anonymous.4open.science/api/repo/Acute_abdomen/zip`
 
 1) Install PyTorch (choose one)
 
