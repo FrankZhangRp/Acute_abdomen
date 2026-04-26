@@ -125,7 +125,7 @@ Notes:
 - Fine-tuning checkpoints: saved under `--output-dir/checkpoints/epoch_*.pth`. For evaluation, set `model.ckpt_path` to the desired checkpoint.
 - Public release assets are mirrored on Hugging Face: [`frankzhang/AbdomenNet`](https://huggingface.co/frankzhang/AbdomenNet)
   - `teacher_checkpoint.pth`: backbone-only teacher checkpoint used for the public AbCT pretraining release.
-  - `test_cases/`: preprocessed qualitative test cases used for visualization / reproducibility utilities.
+  - Qualitative `test_cases/` are not bundled in the default public HF release.
 
 ## Training & Evaluation
 
