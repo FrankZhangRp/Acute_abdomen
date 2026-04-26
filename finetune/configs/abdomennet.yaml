@@ -1,7 +1,7 @@
 data:
-  train_dataset: put your path here
-  val_dataset: put your path here
-  test_dataset: put your path here
+  train_dataset: /absolute/path/to/train.csv
+  val_dataset: /absolute/path/to/val.csv
+  test_dataset: /absolute/path/to/test.csv
   batch_size: 16
   num_workers: 2
   random_z_flip: false
@@ -32,7 +32,7 @@ optim:
   lr_scheduler: cosine # step warmup
   weight_decay: 5e-4
   lr: 5e-4
-  backbone_lr: 1e-3 # 预训练头的学习率
+  backbone_lr: 1e-3 # learning rate for the pretrained backbone head
   warmup_epochs: 0
   min_lr: 1.0e-06
   clip_grad: 3.0

@@ -70,7 +70,7 @@ class DINOLoss(nn.Module):
             lsm = F.log_softmax(s / self.student_temp, dim=-1)
             for t in teacher_out_softmaxed_centered_list:
                 loss = torch.sum(t * lsm, dim=-1)
-                # 检查loss.mean()是否nan
+                # Check whether loss.mean() is NaN.
                 if torch.isnan(loss.mean()):
                     print(f"loss is nan {t} {lsm}")
                 total_loss -= loss.mean()

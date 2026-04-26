@@ -3,8 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./pretrain/LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-AbdomenNet-yellow)](https://huggingface.co/frankzhang/AbdomenNet)
-[![Weights](https://img.shields.io/badge/Model%20Weights-teacher_checkpoint.pth-orange)](https://huggingface.co/frankzhang/AbdomenNet)
+[![Demo Cases](https://img.shields.io/badge/Demo%20Cases-Google%20Drive-blue)](https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing)
 
 This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
 
@@ -123,9 +122,19 @@ Notes:
   - A direct `pos_embed` state dict; or
   - A dict with `teacher.backbone.*` keys (automatically mapped to the model backbone).
 - Fine-tuning checkpoints: saved under `--output-dir/checkpoints/epoch_*.pth`. For evaluation, set `model.ckpt_path` to the desired checkpoint.
-- Public release assets are mirrored on Hugging Face: [`frankzhang/AbdomenNet`](https://huggingface.co/frankzhang/AbdomenNet)
-  - `teacher_checkpoint.pth`: backbone-only teacher checkpoint used for the public AbCT pretraining release.
-  - Qualitative `test_cases/` are not bundled in the default public HF release.
+- During peer review, the default release-demo download source is Google Drive:
+  - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
+- After paper acceptance, the model weights are planned to be formally mirrored on Hugging Face.
+
+### Release demo test cases
+
+- Demo NIfTI cases and release-demo metadata are provided separately via Google Drive:
+  - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
+- The local release-demo template in this repo uses:
+  - `papers/revision_nc_20260329/release_demo/test_cases/test_cases.csv`
+  - `papers/revision_nc_20260329/release_demo/test_cases/abdo_trans_20250812_eval.yaml`
+  - `papers/revision_nc_20260329/release_demo/README.md`
+  - `papers/revision_nc_20260329/release_demo/abdomennet_release_demo.ipynb`
 
 ## Training & Evaluation
 

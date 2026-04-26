@@ -52,11 +52,11 @@ optim:
   o1_change01: False
   o1_label_smooth: 0
   o1_dropout: 0
-  use_amp: true # 使用半精度
+  use_amp: true # mixed precision
   optimizer: adamw # adamw sgd
   sgd_momentum: 0.9
   lr_scheduler: cosine # step warmup
-  loss_type: 'CE' # 损失函数 CE BCE Focal loss
+  loss_type: 'CE' # CE / BCE / focal variants
   weight_decay: 0.2
   weight_decay_end: 0.4
   lr: 1e-4  # will be set after applying scaling rule

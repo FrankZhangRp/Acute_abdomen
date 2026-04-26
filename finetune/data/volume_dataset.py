@@ -7,8 +7,9 @@ import nibabel as nib
 
 class VolumeDataset(object):
     def __init__(self, data_path=None, transform=None, logger=None):
-        assert os.path.exists(data_path), '{} not exist 文件不存在'.format(data_path)
+        assert os.path.exists(data_path), f"{data_path} does not exist"
         self.data_path = data_path
+        self.data_dir = os.path.dirname(os.path.abspath(data_path))
         self.transform = transform
         self.flie_type = data_path.split('.')[-1]
         self.logger = logger
@@ -19,7 +20,7 @@ class VolumeDataset(object):
         elif '.nii.gz' in self.images_list[0]:
             self.image_type = 'nii.gz'
         else:
-            raise ValueError('不支持的图片类型')
+            raise ValueError('Unsupported image type')
         
     def _read_data(self):
         if self.flie_type == 'txt':
@@ -33,7 +34,7 @@ class VolumeDataset(object):
                     else:
                         split_list = line.split(',')
 
-                    images_list.append(split_list[0])
+                    images_list.append(self._resolve_image_path(split_list[0]))
 
                     if len(split_list) > 2:
                         labels = [int(label) for label in split_list[1:]]
@@ -43,13 +44,19 @@ class VolumeDataset(object):
                         labels_list.append(int(split_list[1]))
         elif self.flie_type == 'csv':
            file_df = pd.read_csv(self.data_path)
-           images_list = file_df.iloc[:, 0].values
+           images_list = [self._resolve_image_path(value) for value in file_df.iloc[:, 0].values]
            if len(file_df.columns) > 2:
                labels_list = file_df.iloc[:, 1:].values
            else:
                labels_list = file_df.iloc[:, 1].values
                
         return images_list, labels_list
+
+    def _resolve_image_path(self, image_path):
+        image_path = str(image_path)
+        if os.path.isabs(image_path):
+            return image_path
+        return os.path.abspath(os.path.join(self.data_dir, image_path))
     
     def __getitem__(self, index):
         image_path = self.images_list[index]

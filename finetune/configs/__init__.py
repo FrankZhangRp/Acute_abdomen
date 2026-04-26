@@ -9,7 +9,7 @@ algorithm_names = sorted(name for name in trainer.__dict__ if 'Trainer' in name 
 def get_args():
     parser = argparse.ArgumentParser(description="DinoV2 finetune")
     
-    parser.add_argument("--config-file", type=str, required=True, help="Model configuration file", default="/data/dataserver01/zhangruipeng/code/BoneFM/our_finetune/configs/default_configs.yaml")
+    parser.add_argument("--config-file", type=str, required=True, help="Model configuration file")
     parser.add_argument("--output-dir", default="", type=str, help="Output directory to write results and logs")
     parser.add_argument("--log-interval", type=int, help="Log interval", default=10)
     parser.add_argument("--log_display", action="store_true", help="Whether to display log")

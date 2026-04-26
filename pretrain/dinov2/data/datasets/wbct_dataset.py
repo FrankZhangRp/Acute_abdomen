@@ -46,7 +46,7 @@ logger = logging.getLogger("dinov2")
 
 class WBCTDataset(ExtendedVisionDataset):
     '''
-    Whole Body CT Dataset 2D slice的dataset
+    Whole-body CT 2D-slice dataset.
     '''
     def __init__(
         self,

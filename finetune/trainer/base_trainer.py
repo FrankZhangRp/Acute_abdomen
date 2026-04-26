@@ -225,7 +225,8 @@ class BaseTrainer(object):
             avg_loss = epoch_loss / len(self.train_dataloader)
             metrics_result = self.metric.results()
             for key, value in metrics_result.items():
-                self.log_tensorboard.add_scalar(f'train_{key}', value, n_epoch)
+                if isinstance(value, (float, int, np.floating, np.integer)):
+                    self.log_tensorboard.add_scalar(f'train_{key}', value, n_epoch)
             
             self.logger.info(f'Finish training epoch {n_epoch}')
             return avg_loss, metrics_result
@@ -272,7 +273,8 @@ class BaseTrainer(object):
             avg_loss = epoch_loss / len(dataloader)
             metrics_result = self.metric.results()
             for key, value in metrics_result.items():
-                self.log_tensorboard.add_scalar(f'{split}_{key}', value, n_epoch)
+                if isinstance(value, (float, int, np.floating, np.integer)):
+                    self.log_tensorboard.add_scalar(f'{split}_{key}', value, n_epoch)
                 
             self.logger.info(f'Finish evaluate {split} epoch {n_epoch}')
             return avg_loss, metrics_result

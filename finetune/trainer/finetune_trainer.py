@@ -359,8 +359,12 @@ class EvalTrans25D_Trainer(FinetuneTrans25D_Trainer):
             if num_tasks > 0:
                 avg_metrics_str = "Average across all tasks:\n"
                 for metric_name, values in all_metrics.items():
-                    if len(values) > 0:
-                        avg_value = sum(values) / len(values)
+                    numeric_values = [
+                        value for value in values
+                        if isinstance(value, (int, float, np.floating, np.integer))
+                    ]
+                    if len(numeric_values) > 0:
+                        avg_value = sum(numeric_values) / len(numeric_values)
                         avg_metrics_str += f"{metric_name}: {avg_value:.4f}\n"
                 
                 self.logger.info(avg_metrics_str)

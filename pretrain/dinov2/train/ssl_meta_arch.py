@@ -107,7 +107,7 @@ class SSLMetaArch(nn.Module):
 
         self.need_to_synchronize_fsdp_streams = True
 
-        # 统一进行预训练参数的读取
+        # Unified pretrained-parameter loading path.
         if cfg.student.pretrained_weights:
             chkpt = torch.load(cfg.student.pretrained_weights, weights_only=True, map_location='cpu')
             if "model" in list(chkpt.keys()):
@@ -115,7 +115,7 @@ class SSLMetaArch(nn.Module):
                 student_model_dict['backbone'].load_state_dict(chkpt["model"], strict=False)
                 self.student = nn.ModuleDict(student_model_dict)
 
-            elif "teacher" in list(chkpt.keys()): # 新加入的部分，从之前训练过程中保存的checkpoint中加载
+            elif "teacher" in list(chkpt.keys()): # Load from a previously saved training checkpoint.
                 logger.info(f"OPTIONS -- pretrained weights: loading from {cfg.student.pretrained_weights}")
                 student_backbone_state_dict = student_model_dict['backbone'].state_dict()
                 if student_backbone_state_dict['pos_embed'].shape != chkpt['teacher']['backbone.pos_embed'].shape:
@@ -124,7 +124,7 @@ class SSLMetaArch(nn.Module):
                 self.student = nn.ModuleDict(student_model_dict)
                 self.student.load_state_dict(chkpt["teacher"], strict=True)
 
-            else: # 依然是只加载backbone部分的参数
+            else: # Fallback: load backbone-only weights.
                 student_backbone_state_dict = student_model_dict['backbone'].state_dict()
                 if student_backbone_state_dict['pos_embed'].shape != chkpt['pos_embed'].shape:
                     chkpt['pos_embed'] = student_backbone_state_dict['pos_embed']

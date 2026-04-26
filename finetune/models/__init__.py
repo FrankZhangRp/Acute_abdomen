@@ -37,9 +37,25 @@ def build_backbone_model(args, only_teacher=True, img_size=224):
 def build_backbone_model_from_cfg(cfg, only_teacher=True):
     return build_backbone_model(cfg.model, only_teacher=only_teacher, img_size=cfg.crops.global_crops_size)
 
+def build_base25d_avg_model_from_cfg(cfg, only_teacher=True):
+    """
+    Backward-compatible alias for older trainer imports.
+    The public release currently ships the Trans25D classification model builder.
+    """
+    return build_trans25d_classification_model_from_cfg(cfg, only_teacher=only_teacher)
+
 def build_trans25d_classification_model_from_cfg(cfg, only_teacher=True):
     backbone_model, embed_dim = build_backbone_model_from_cfg(cfg, only_teacher=only_teacher)
-    model = trans25d.Trans25D_Classification(backbone_model, embed_dim, cfg.model.use_n_blocks, cfg.model.use_avgpool, cfg.model.num_classes, cfg.model.num_decoder_layers, cfg.model.trans_nhead, cfg极.model.trans_dim_feedforward_ratio)
+    model = trans25d.Trans25D_Classification(
+        backbone_model,
+        embed_dim,
+        cfg.model.use_n_blocks,
+        cfg.model.use_avgpool,
+        cfg.model.num_classes,
+        cfg.model.num_decoder_layers,
+        cfg.model.trans_nhead,
+        cfg.model.trans_dim_feedforward_ratio,
+    )
     return model, embed_dim
 
 def build_visualize_trans25d_classification_model_from_cfg(cfg, only_teacher=True):
