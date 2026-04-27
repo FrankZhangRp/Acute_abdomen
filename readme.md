@@ -129,6 +129,14 @@ Notes:
 - NIfTI `.nii.gz` volumes are loaded and converted to grayscale slices along the z-axis, then stacked to 3-channel images for augmentation/normalization.
 - Training samples up to 300 slices per volume with a stride; evaluation can set different `max_slices` via evaluation trainers.
 
+1) CT intensity preprocessing
+
+- For both **pre-training** and **fine-tuning**, the raw CT volumes were normalized using a **soft-tissue window**:
+  - **window width = 350 HU**
+  - **window level = 40 HU**
+- In practical terms, this corresponds to clipping intensities to approximately **[-135, 215] HU** and then rescaling to the image range used by the downstream pipeline.
+- This preprocessing choice was applied consistently across the AbdomenNet pretraining and downstream classification experiments unless a specific external baseline required its own author-recommended preprocessing pipeline.
+
 1) Model checkpoints
 
 - Pretrained backbone (optional): set `model.pretrained_weights` to a ViT DINOv2-style checkpoint. The loader supports either:
