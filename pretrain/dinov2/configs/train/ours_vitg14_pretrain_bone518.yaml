@@ -1,3 +1,5 @@
+# Adapted from DINOv2 Apache-2.0 training configs for Acute Abdomen CT
+# pre-training.
 dino:
   head_n_prototypes: 131072
   head_bottleneck_dim: 384

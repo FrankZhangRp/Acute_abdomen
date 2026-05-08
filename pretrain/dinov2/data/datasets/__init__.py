@@ -2,6 +2,9 @@
 #
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
+#
+# Modified for the Acute Abdomen project to expose custom MyDataset and WBCT
+# datasets used by the pre-training pipeline.
 
 from .image_net import ImageNet
 from .image_net_22k import ImageNet22k

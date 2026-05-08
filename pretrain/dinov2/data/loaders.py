@@ -2,6 +2,9 @@
 #
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
+#
+# Modified for the Acute Abdomen project to register custom MyDataset and WBCT
+# dataset loaders for abdominal CT pre-training.
 
 import logging
 from enum import Enum

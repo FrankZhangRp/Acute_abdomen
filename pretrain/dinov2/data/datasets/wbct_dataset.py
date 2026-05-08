@@ -1,6 +1,12 @@
-'''
-Whole Body CT Dataset
-'''
+# Copyright (c) Acute Abdomen project contributors.
+#
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
+#
+# Added for the Acute Abdomen project to support abdominal CT slice
+# pre-training with the DINOv2 data pipeline.
+
+"""Whole Body CT Dataset."""
 import csv
 from enum import Enum
 import logging

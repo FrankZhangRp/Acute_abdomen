@@ -1,6 +1,6 @@
 # Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./pretrain/LICENSE)
+[![DINOv2 License: Apache-2.0](https://img.shields.io/badge/DINOv2%20License-Apache--2.0-green.svg)](./pretrain/LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
 [![Demo Cases](https://img.shields.io/badge/Demo%20Cases-Google%20Drive-blue)](https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing)
@@ -12,6 +12,14 @@ The repo contains:
 - Pre-training: DINOv2-based ViT backbone pretraining code in `pretrain/`.
 - Fine-tuning & evaluation: Multi-task classification on non-contrast abdominal CT in `finetune/`, using a 2.5D Transformer decoder to model full volumes and supporting multi-label/multi-task setups.
 - Statistical analysis utilities: bootstrap CIs, paired DeLong, MRMC GLMM, Wilcoxon signed-rank, and Mann-Whitney U scripts in `statistics/`.
+
+## Acknowledgements
+
+The pre-training code in `pretrain/` builds on the open-source
+[DINOv2](https://github.com/facebookresearch/dinov2) project from Meta AI
+Research/FAIR. DINOv2 code and model weights are released under the Apache
+License 2.0, and the redistributed DINOv2-derived source files retain the
+original Meta copyright and Apache-2.0 license notices.
 
 ## Repository Structure
 
@@ -250,7 +258,10 @@ The log will print per-task metrics (e.g., AUC, mAP, F1, ACC) and their averages
 
 ## License
 
-MIT License
+The DINOv2-derived pre-training code and any DINOv2 initialization weights are
+governed by the Apache License 2.0; see `pretrain/LICENSE` and the copyright
+headers retained in `pretrain/dinov2/`. Please also cite or acknowledge the
+original DINOv2 work when using this pre-training component.
 
 ## Statistical Analysis
 
