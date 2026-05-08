@@ -13,14 +13,6 @@ The repo contains:
 - Fine-tuning & evaluation: Multi-task classification on non-contrast abdominal CT in `finetune/`, using a 2.5D Transformer decoder to model full volumes and supporting multi-label/multi-task setups.
 - Statistical analysis utilities: bootstrap CIs, paired DeLong, MRMC GLMM, Wilcoxon signed-rank, and Mann-Whitney U scripts in `statistics/`.
 
-## Acknowledgements
-
-The pre-training code in `pretrain/` builds on the open-source
-[DINOv2](https://github.com/facebookresearch/dinov2) project from Meta AI
-Research/FAIR. DINOv2 code and model weights are released under the Apache
-License 2.0, and the redistributed DINOv2-derived source files retain the
-original Meta copyright and Apache-2.0 license notices.
-
 ## Repository Structure
 
 The repository is organized into two main parts:
@@ -255,6 +247,14 @@ The log will print per-task metrics (e.g., AUC, mAP, F1, ACC) and their averages
 - `model.*`: ViT backbone + 2.5D decoder (last `use_n_blocks` CLS tokens + optional mean patch token → linear reduction → Transformer decoder → classifier)
 - `optim.*`: optimizer, LR/scheduler, loss types (Focal and weighted BCE supported)
 - `trainer`: `FinetuneTrans25D_Trainer` (train/val/test) or `EvalTrans25D_Trainer` (test only)
+
+## Acknowledgements
+
+The pre-training code in `pretrain/` builds on the open-source
+[DINOv2](https://github.com/facebookresearch/dinov2) project from Meta AI
+Research/FAIR. DINOv2 code and model weights are released under the Apache
+License 2.0, and the redistributed DINOv2-derived source files retain the
+original Meta copyright and Apache-2.0 license notices.
 
 ## License
 
