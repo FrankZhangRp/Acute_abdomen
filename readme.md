@@ -151,11 +151,14 @@ Notes:
 
 - Demo NIfTI cases and release-demo metadata are provided separately via Google Drive:
   - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
+- Put downloaded demo files under:
+  - `demo/release/test_cases/`
+- The public demo bundle should contain five de-identified CT cases spanning at least three distinct positive diagnosis labels. After downloading, validate this before running the notebook:
+  - `python demo/release/validate_demo_cases.py`
 - The local release-demo template in this repo uses:
-  - `papers/revision_nc_20260329/release_demo/test_cases/test_cases.csv`
-  - `papers/revision_nc_20260329/release_demo/test_cases/abdo_trans_20250812_eval.yaml`
-  - `papers/revision_nc_20260329/release_demo/README.md`
-  - `papers/revision_nc_20260329/release_demo/abdomennet_release_demo.ipynb`
+  - `demo/release/test_cases/test_cases.csv`
+  - `demo/release/README.md`
+  - `demo/release/abdomennet_release_demo.ipynb`
 
 ## Training & Evaluation
 

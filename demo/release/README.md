@@ -1,9 +1,9 @@
-# AbdomenNet Release Demo
+# AbdomenNet Public Demo
 
 This folder contains a minimal public demo for:
 
 - checkpoint loading
-- inference on five sample NIfTI cases
+- inference on five de-identified sample NIfTI cases
 - a tiny smoke-training example that verifies the training entry point
 
 ## Download demo cases
@@ -12,10 +12,10 @@ The current default demo download source is Google Drive:
 
 - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
 
-Place the downloaded files inside:
+Place the downloaded files inside this public demo directory:
 
 ```text
-papers/revision_nc_20260329/release_demo/test_cases/
+demo/release/test_cases/
 ```
 
 Expected files:
@@ -26,7 +26,14 @@ Expected files:
 - `case4.nii.gz`
 - `case5.nii.gz`
 - `test_cases.csv`
-- `abdo_trans_20250812_eval.yaml`
+
+The five demo cases should span at least three distinct positive diagnosis labels. This keeps the public qualitative examples from representing only one disease category.
+
+Validate the downloaded bundle before running the notebook:
+
+```bash
+python demo/release/validate_demo_cases.py
+```
 
 The plan is to mirror the formal model release on Hugging Face after paper acceptance.
 
@@ -34,7 +41,7 @@ The plan is to mirror the formal model release on Hugging Face after paper accep
 
 Use the notebook:
 
-- `abdomennet_release_demo.ipynb`
+- `demo/release/abdomennet_release_demo.ipynb`
 
 It walks through:
 
