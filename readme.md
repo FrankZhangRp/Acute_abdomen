@@ -3,7 +3,6 @@
 [![DINOv2 License: Apache-2.0](https://img.shields.io/badge/DINOv2%20License-Apache--2.0-green.svg)](./pretrain/LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
-![Patient data not included](https://img.shields.io/badge/Patient%20Data-Not%20Included-lightgrey.svg)
 
 This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
 
@@ -132,7 +131,8 @@ Notes:
 
 1) Model checkpoints
 
-- Model weights and patient cases are not tracked in this repository. Obtain checkpoints only from an authorized project release channel and keep local artifact paths out of git.
+- The released AbdomenNet model is available on Hugging Face: https://huggingface.co/frankzhang/AbdomenNet
+- Model weights and patient cases are not tracked in this code repository. Download checkpoints from the model release page and keep local artifact paths out of git.
 - Pretrained backbone (optional): set `model.pretrained_weights` to a ViT DINOv2-style checkpoint. The loader supports either:
   - A direct `pos_embed` state dict; or
   - A dict with `teacher.backbone.*` keys (automatically mapped to the model backbone).
