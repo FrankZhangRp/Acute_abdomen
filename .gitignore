@@ -30,11 +30,11 @@ MANIFEST
 ehthumbs.db
 Thumbs.db
 
-# Public demo downloads and generated tutorial outputs
-demo/release/test_cases/*
-!demo/release/test_cases/.gitkeep
-demo/release/test_cases_abs.csv
-demo/release/abdomennet_demo_infer.yaml
-demo/release/abdomennet_demo_train_smoke.yaml
-demo/release/demo_infer_output/
-demo/release/demo_train_smoke_output/
+# Local sample data and generated tutorial outputs
+demo/release/local_cases/*
+!demo/release/local_cases/.gitkeep
+demo/release/local_cases_abs.csv
+demo/release/abdomennet_local_infer.yaml
+demo/release/abdomennet_local_train_smoke.yaml
+demo/release/local_infer_output/
+demo/release/local_train_smoke_output/

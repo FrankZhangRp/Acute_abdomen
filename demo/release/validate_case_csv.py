@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the public AbdomenNet demo bundle before running tutorials."""
+"""Validate a local AbdomenNet case CSV before running tutorials."""
 
 from __future__ import annotations
 
@@ -13,27 +13,27 @@ def _truthy(value: str) -> bool:
     return text in {"1", "1.0", "true", "yes", "y", "positive", "pos"}
 
 
-def validate_demo_cases(
+def validate_case_csv(
     csv_path: Path,
-    expected_cases: int,
-    min_diagnoses: int,
+    expected_cases: int | None,
+    min_positive_labels: int | None,
     check_files: bool,
 ) -> None:
     if not csv_path.exists():
-        raise FileNotFoundError(f"Demo CSV not found: {csv_path}")
+        raise FileNotFoundError(f"Case CSV not found: {csv_path}")
 
     with csv_path.open(newline="", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
 
     if not rows:
-        raise ValueError(f"Demo CSV is empty: {csv_path}")
+        raise ValueError(f"Case CSV is empty: {csv_path}")
 
     fieldnames = list(rows[0].keys())
     if len(fieldnames) < 2:
-        raise ValueError("Demo CSV must contain an image path column and at least one label column.")
+        raise ValueError("Case CSV must contain an image path column and at least one label column.")
 
-    if len(rows) != expected_cases:
-        raise ValueError(f"Expected {expected_cases} demo cases, found {len(rows)} in {csv_path}.")
+    if expected_cases is not None and len(rows) != expected_cases:
+        raise ValueError(f"Expected {expected_cases} cases, found {len(rows)} in {csv_path}.")
 
     image_column = fieldnames[0]
     label_columns = fieldnames[1:]
@@ -50,22 +50,22 @@ def validate_demo_cases(
 
         row_positive_labels = [label for label in label_columns if _truthy(row.get(label, ""))]
         if not row_positive_labels:
-            raise ValueError(f"Demo case row {row_index} has no positive diagnosis label.")
+            raise ValueError(f"Case CSV row {row_index} has no positive diagnosis label.")
         positive_labels.update(row_positive_labels)
 
     if missing_files:
         missing = "\n".join(missing_files)
-        raise FileNotFoundError(f"Missing demo image files:\n{missing}")
+        raise FileNotFoundError(f"Missing image files:\n{missing}")
 
-    if len(positive_labels) < min_diagnoses:
+    if min_positive_labels is not None and len(positive_labels) < min_positive_labels:
         raise ValueError(
-            "Demo cases should span multiple positive diagnosis labels; "
+            "Case CSV should span multiple positive labels; "
             f"found {len(positive_labels)} distinct positive label(s): {sorted(positive_labels)}"
         )
 
     print(
-        "Demo bundle OK: "
-        f"{len(rows)} cases, {len(positive_labels)} distinct positive diagnosis labels."
+        "Case CSV OK: "
+        f"{len(rows)} rows, {len(positive_labels)} distinct positive label(s)."
     )
 
 
@@ -73,23 +73,21 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "csv_path",
-        nargs="?",
-        default=Path(__file__).resolve().parent / "test_cases" / "test_cases.csv",
         type=Path,
-        help="Path to the demo test_cases.csv file.",
+        help="Path to a local case CSV file.",
     )
-    parser.add_argument("--expected-cases", type=int, default=5)
-    parser.add_argument("--min-diagnoses", type=int, default=3)
+    parser.add_argument("--expected-cases", type=int, default=None)
+    parser.add_argument("--min-positive-labels", type=int, default=None)
     parser.add_argument(
         "--skip-file-check",
         action="store_true",
         help="Only validate CSV shape and label diversity, without checking image files.",
     )
     args = parser.parse_args()
-    validate_demo_cases(
+    validate_case_csv(
         args.csv_path,
         expected_cases=args.expected_cases,
-        min_diagnoses=args.min_diagnoses,
+        min_positive_labels=args.min_positive_labels,
         check_files=not args.skip_file_check,
     )
 

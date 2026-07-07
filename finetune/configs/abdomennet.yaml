@@ -1,7 +1,7 @@
 data:
-  train_dataset: /absolute/path/to/train.csv
-  val_dataset: /absolute/path/to/val.csv
-  test_dataset: /absolute/path/to/test.csv
+  train_dataset: data/train.csv
+  val_dataset: data/val.csv
+  test_dataset: data/test.csv
   batch_size: 16
   num_workers: 2
   random_z_flip: false

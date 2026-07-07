@@ -3,7 +3,7 @@
 [![DINOv2 License: Apache-2.0](https://img.shields.io/badge/DINOv2%20License-Apache--2.0-green.svg)](./pretrain/LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
-[![Demo Cases](https://img.shields.io/badge/Demo%20Cases-Google%20Drive-blue)](https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing)
+![Patient data not included](https://img.shields.io/badge/Patient%20Data-Not%20Included-lightgrey.svg)
 
 This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
 
@@ -37,24 +37,17 @@ conda activate abdomen
 1) Download repo
 
 ```sh
-# Download and unzip from the anonymous review repository
-wget https://anonymous.4open.science/api/repo/Acute_abdomen/zip -O Acute_abdomen.zip
-unzip Acute_abdomen.zip
+git clone <repository-url>
 cd Acute_abdomen
 ```
 
 Alternative download commands:
 
 ```sh
-curl -L https://anonymous.4open.science/api/repo/Acute_abdomen/zip -o Acute_abdomen.zip
-python -m zipfile -e Acute_abdomen.zip .
+wget <repository-zip-url> -O Acute_abdomen.zip
+python -m zipfile -e Acute_abdomen.zip Acute_abdomen
 cd Acute_abdomen
 ```
-
-Anonymous repository links:
-
-- Readme page: `https://anonymous.4open.science/r/Acute_abdomen/readme.md`
-- Direct zip download: `https://anonymous.4open.science/api/repo/Acute_abdomen/zip`
 
 1) Install PyTorch (choose one)
 
@@ -113,15 +106,15 @@ After the above steps, you can run fine-tuning/evaluation directly; use the DINO
 Example (multi-task/multi-label):
 
 ```text
-/abs/path/to/study_0001.npy 1 0 0 1 0 1 0 0 1 0 1
-/abs/path/to/study_0002.npy 0 1 1 0 0 0 1 0 0 1 0
+data/examples/study_0001.npy 1 0 0 1 0 1 0 0 1 0 1
+data/examples/study_0002.npy 0 1 1 0 0 0 1 0 0 1 0
 ```
 
 Example (single-task binary):
 
 ```text
-/abs/path/to/study_0003.npy 1
-/abs/path/to/study_0004.npy 0
+data/examples/study_0003.npy 1
+data/examples/study_0004.npy 0
 ```
 
 Notes:
@@ -139,26 +132,24 @@ Notes:
 
 1) Model checkpoints
 
+- Model weights and patient cases are not tracked in this repository. Obtain checkpoints only from an authorized project release channel and keep local artifact paths out of git.
 - Pretrained backbone (optional): set `model.pretrained_weights` to a ViT DINOv2-style checkpoint. The loader supports either:
   - A direct `pos_embed` state dict; or
   - A dict with `teacher.backbone.*` keys (automatically mapped to the model backbone).
 - Fine-tuning checkpoints: saved under `--output-dir/checkpoints/epoch_*.pth`. For evaluation, set `model.ckpt_path` to the desired checkpoint.
-- During peer review, the default release-demo download source is Google Drive:
-  - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
-- After paper acceptance, the model weights are planned to be formally mirrored on Hugging Face.
+- A backbone-only checkpoint can initialize the model but is not a complete classification release by itself. Classification evaluation also requires a matching fine-tuned checkpoint with the task head.
 
-### Release demo test cases
+### Local inference tutorial
 
-- Demo NIfTI cases and release-demo metadata are provided separately via Google Drive:
-  - https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
-- Put downloaded demo files under:
-  - `demo/release/test_cases/`
-- The public demo bundle should contain five de-identified CT cases spanning at least three distinct positive diagnosis labels. After downloading, validate this before running the notebook:
-  - `python demo/release/validate_demo_cases.py`
-- The local release-demo template in this repo uses:
-  - `demo/release/test_cases/test_cases.csv`
+- No patient cases or private metadata are distributed with this repository.
+- Put locally permitted sample files under:
+  - `demo/release/local_cases/`
+- Validate a local CSV before running the notebook:
+  - `python demo/release/validate_case_csv.py demo/release/local_cases/cases.csv`
+- The local tutorial template in this repo uses:
+  - `demo/release/local_cases/cases.csv` (user-provided; ignored by git)
   - `demo/release/README.md`
-  - `demo/release/abdomennet_release_demo.ipynb`
+  - `demo/release/abdomennet_local_inference.ipynb`
 
 ## Training & Evaluation
 
@@ -167,7 +158,7 @@ Entry point: `finetune/run/run_trainer.py`, configured entirely by a YAML config
 1) Prepare a config
 
 - Template: `finetune/configs/abdomennet.yaml`. Key fields include:
-  - `data.train_dataset / val_dataset / test_dataset`: absolute paths to the list files (.txt/.csv)
+  - `data.train_dataset / val_dataset / test_dataset`: local paths to the list files (.txt/.csv)
   - `model.num_classes`: number of tasks/labels (must match your data)
   - `model.pretrained_weights`: optional ViT pretrained path (empty = random init of backbone)
   - `optim.loss_type`: BCE (multi-label) / CE (multi-class) / CE_Focal / BCE_Focal
@@ -178,9 +169,9 @@ You can also copy and customize:
 ```yaml
 # my_abdomen.yaml (example)
 data:
-  train_dataset: "/abs/path/train_list.txt"
-  val_dataset:   "/abs/path/val_list.txt"
-  test_dataset:  "/abs/path/test_list.txt"
+  train_dataset: "data/train_list.txt"
+  val_dataset:   "data/val_list.txt"
+  test_dataset:  "data/test_list.txt"
   batch_size: 16
   num_workers: 8
 crops:
@@ -194,7 +185,7 @@ model:
   num_decoder_layers: 3
   trans_nhead: 16
   trans_dim_feedforward_ratio: 4
-  pretrained_weights: "/abs/path/to/dinov2_vitg14.pth"   # optional
+  pretrained_weights: "checkpoints/backbone.pth"   # optional
 optim:
   loss_type: BCE
   epochs: 30
@@ -209,7 +200,7 @@ trainer: FinetuneTrans25D_Trainer
 ```sh
 python finetune/run/run_trainer.py \
   --config-file finetune/configs/abdomennet.yaml \
-  --output-dir /abs/path/to/outputs/abdomennet
+  --output-dir outputs/abdomennet
 ```
 
 Logs, TensorBoard, and prediction `.npz` files are written under `--output-dir` (subdirs: `tensorboard/`, `pred_npz/`).
@@ -219,7 +210,7 @@ Resume training:
 ```sh
 python finetune/run/run_trainer.py \
   --config-file finetune/configs/abdomennet.yaml \
-  --output-dir /abs/path/to/outputs/abdomennet \
+  --output-dir outputs/abdomennet \
   --resume
 ```
 
@@ -230,15 +221,15 @@ Set `trainer: EvalTrans25D_Trainer` and provide `model.ckpt_path`:
 ```yaml
 trainer: EvalTrans25D_Trainer
 model:
-  ckpt_path: "/abs/path/to/outputs/abdomennet/checkpoints/epoch_29.pth"
+  ckpt_path: "outputs/abdomennet/checkpoints/epoch_XX.pth"
 ```
 
 Run:
 
 ```sh
 python finetune/run/run_trainer.py \
-  --config-file /abs/path/to/my_eval.yaml \
-  --output-dir /abs/path/to/outputs/eval_run
+  --config-file configs/my_eval.yaml \
+  --output-dir outputs/eval_run
 ```
 
 The log will print per-task metrics (e.g., AUC, mAP, F1, ACC) and their averages across tasks.

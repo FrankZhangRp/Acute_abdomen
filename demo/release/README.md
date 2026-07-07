@@ -1,58 +1,54 @@
-# AbdomenNet Public Demo
+# AbdomenNet Local Inference Example
 
-This folder contains a minimal public demo for:
+This folder contains a minimal local tutorial for:
 
 - checkpoint loading
-- inference on five de-identified sample NIfTI cases
+- inference on locally provided NIfTI or NumPy volumes
 - a tiny smoke-training example that verifies the training entry point
 
-## Download demo cases
+## Local case files
 
-The current default demo download source is Google Drive:
+No patient cases or private metadata are distributed from this repository.
 
-- https://drive.google.com/drive/folders/1uNKexIEE11j7Nf5LiFkiIGaTdCjW_nEm?usp=sharing
-
-Place the downloaded files inside this public demo directory:
+Place only local, permitted sample files inside:
 
 ```text
-demo/release/test_cases/
+demo/release/local_cases/
 ```
 
-Expected files:
+Use a CSV where the first column is the image path and the remaining columns
+are 0/1 labels. Relative image paths are resolved from the CSV directory.
 
-- `case1.nii.gz`
-- `case2.nii.gz`
-- `case3.nii.gz`
-- `case4.nii.gz`
-- `case5.nii.gz`
-- `test_cases.csv`
+Example:
 
-The five demo cases should span at least three distinct positive diagnosis labels. This keeps the public qualitative examples from representing only one disease category.
+```text
+image_path,label_0,label_1,label_2
+sample_001.nii.gz,1,0,0
+sample_002.nii.gz,0,1,0
+```
 
-Validate the downloaded bundle before running the notebook:
+Validate a local CSV before running the notebook:
 
 ```bash
-python demo/release/validate_demo_cases.py
+python demo/release/validate_case_csv.py demo/release/local_cases/cases.csv
 ```
-
-The plan is to mirror the formal model release on Hugging Face after paper acceptance.
 
 ## Notebook tutorial
 
 Use the notebook:
 
-- `demo/release/abdomennet_release_demo.ipynb`
+- `demo/release/abdomennet_local_inference.ipynb`
 
 It walks through:
 
-1. preparing relative-path demo CSV files
+1. preparing relative-path local CSV files
 2. writing a runnable inference config
-3. running release-checkpoint inference
+3. running checkpoint inference
 4. collecting `pred_npz/test_epoch_0.npz`
 5. preparing a tiny smoke-training config
 
 ## Notes
 
 - The notebook is designed as a reproducibility/tutorial artifact.
-- The smoke-training section is intentionally tiny and exists only to validate the public training entry point.
-- For real training, replace the demo CSV with your own train/val/test splits and use the standard `finetune/configs/abdomennet.yaml` template.
+- The smoke-training section is intentionally tiny and exists only to validate the training entry point.
+- For real training, replace the local CSV with your own train/val/test splits and use the standard `finetune/configs/abdomennet.yaml` template.
