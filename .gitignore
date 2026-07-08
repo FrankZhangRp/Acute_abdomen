@@ -29,12 +29,3 @@ MANIFEST
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Local sample data and generated tutorial outputs
-demo/release/local_cases/*
-!demo/release/local_cases/.gitkeep
-demo/release/local_cases_abs.csv
-demo/release/abdomennet_local_infer.yaml
-demo/release/abdomennet_local_train_smoke.yaml
-demo/release/local_infer_output/
-demo/release/local_train_smoke_output/

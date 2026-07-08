@@ -139,18 +139,6 @@ Notes:
 - Fine-tuning checkpoints: saved under `--output-dir/checkpoints/epoch_*.pth`. For evaluation, set `model.ckpt_path` to the desired checkpoint.
 - A backbone-only checkpoint can initialize the model but is not a complete classification release by itself. Classification evaluation also requires a matching fine-tuned checkpoint with the task head.
 
-### Local inference tutorial
-
-- No patient cases or private metadata are distributed with this repository.
-- Put locally permitted sample files under:
-  - `demo/release/local_cases/`
-- Validate a local CSV before running the notebook:
-  - `python demo/release/validate_case_csv.py demo/release/local_cases/cases.csv`
-- The local tutorial template in this repo uses:
-  - `demo/release/local_cases/cases.csv` (user-provided; ignored by git)
-  - `demo/release/README.md`
-  - `demo/release/abdomennet_local_inference.ipynb`
-
 ## Training & Evaluation
 
 Entry point: `finetune/run/run_trainer.py`, configured entirely by a YAML config.
