@@ -1,10 +1,10 @@
-# Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage
+# A foundation model for acute abdomen diagnosis stratification and triage on noncontrast CT
 
 [![DINOv2 License: Apache-2.0](https://img.shields.io/badge/DINOv2%20License-Apache--2.0-green.svg)](./pretrain/LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
 
-This is the official repository for the paper “Acute abdomen on non-contrast CT: a foundation model for diagnosis, risk stratification and emergency triage.”
+This is the official repository for the paper “A foundation model for acute abdomen diagnosis stratification and triage on noncontrast CT.”
 
 The repo contains:
 
